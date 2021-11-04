@@ -6,7 +6,7 @@ fSolver<-function(z, a, extra) {
     fobj <- extra$fobj
     gobj <- extra$gobj
     n <- length(x)
-    if (length(a)==0) { 
+    if (length(a)==0) {
       indi <- diag(n)
     } else {
       if (is.vector(a)) a <- matrix(a,1,2)
@@ -16,7 +16,9 @@ fSolver<-function(z, a, extra) {
     p <- optim(z,
          fn=function(u) fobj(drop(indi%*%u)),
          gr=function(u) drop(crossprod(indi,gobj(drop(indi%*%u)))),
-         method="BFGS")
+         method="L-BFGS-B",
+         lower = 0,
+         upper = 1)
     y <- drop(indi%*%(p$par))
     f <- p$value
     gy <- gobj(y)
