@@ -17,8 +17,8 @@ fSolver<-function(z, a, extra) {
          fn=function(u) fobj(drop(indi%*%u)),
          gr=function(u) drop(crossprod(indi,gobj(drop(indi%*%u)))),
          method="L-BFGS-B",
-         lower = 0,
-         upper = 1)
+         lower = 1e-6,
+         upper = 1 - 1e-6)
     y <- drop(indi%*%(p$par))
     f <- p$value
     gy <- gobj(y)
